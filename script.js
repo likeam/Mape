@@ -121,7 +121,7 @@ class App {
     _newWorkout(e){
 
         const validInput = (...inputs) => inputs.every(inp => Number.isFinite(inp));
-
+        const allPositive = (...inputs) => inputs.every(inp => inp >0);
 
         
             e.preventDefault();
@@ -131,6 +131,7 @@ class App {
             const type = inputType.value;
             const distance = +inputDistance.value;
             const duration = +inputDuration.value;
+            const {lat, lng } = this.mapEvent.latlng;
 
              //CHECK IF DATA IS VALID
 
@@ -140,9 +141,11 @@ class App {
                 const cadence = +inputCadence.value;
                 //CHECK IF DATA IS VALID
              if(
-                !validInput(distance, duration, cadence )
+                !validInput(distance, duration, cadence ) ||
+                !allPositive(distance,duration,cadence)
             )
             return alert('Input have to be Positive Numabers!');
+            workout = new Running([lat, lng], distance, duration, cadence);
 
             }
 
@@ -151,9 +154,11 @@ class App {
                 const elevatin  = +inputElevation.value;
                 //CHECK IF DATA IS VALID
              if(
-                !validInput(distance, duration, elevatin )
+                !validInput(distance, duration, elevatin ) ||
+                !allPositive(distance,duration)
             )
             return alert('Input have to be Positive Numabers!');
+            workout = new Cycling([lat, lng], distance, duration, elevation);
 
             }
 
@@ -164,7 +169,7 @@ class App {
 
             inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
                
-                    const {lat, lng } = this.mapEvent.latlng;
+                   
         
                     L.marker([lat, lng]).addTo(this.#map).bindPopup(L.popup({
                          maxWidth: 250,
