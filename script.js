@@ -67,7 +67,9 @@ class App {
 
     #map;
     #mapEvent;
+    #workouts = [];
     constructor(){
+      
        this._getPosition();
        form.addEventListener('submit', this._newWorkout.bind(this));
        inputType.addEventListener("change", this._toggleElevationField);
@@ -132,6 +134,7 @@ class App {
             const distance = +inputDistance.value;
             const duration = +inputDuration.value;
             const {lat, lng } = this.mapEvent.latlng;
+            let Workout;
 
              //CHECK IF DATA IS VALID
 
@@ -145,8 +148,8 @@ class App {
                 !allPositive(distance,duration,cadence)
             )
             return alert('Input have to be Positive Numabers!');
-            workout = new Running([lat, lng], distance, duration, cadence);
-
+             workout = new Running([lat, lng], distance, duration, cadence);
+        
             }
 
              // FO WORKOUT CYCLING , CREATE CYCLING 
@@ -164,7 +167,8 @@ class App {
 
 
              // ADD NEW OBJECT TO WORKOUT ARRY
-
+             this.#workouts.push(workout);
+            console.log(workout);
              // RENDER WORKOUT ON MAP AS MARKER
 
             inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
