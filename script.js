@@ -167,24 +167,26 @@ class App {
 
 
              // ADD NEW OBJECT TO WORKOUT ARRY
-             this.#workouts.push(workout);
+            this.#workouts.push(workout);
             console.log(workout);
-             // RENDER WORKOUT ON MAP AS MARKER
+            this.renderWorkoutMarker(workout);
+             // RENDER WORKOUT ON MAP) AS MARKER
 
             inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
                
                    
         
-                    L.marker([lat, lng]).addTo(this.#map).bindPopup(L.popup({
+            _renderWorkoutMarker(workout) {  
+                       L.marker([lat, lng]).addTo(this.#map).bindPopup(L.popup({
                          maxWidth: 250,
                         minWidth: 100,
                         autoClose:false,
                         closeOnClick:false,
-                        className: 'running-popup',
-                    })).setPopupContent('Naqsha').openPopup();
+                        className: `${type}-popup`,
+                    })).setPopupContent(workout.distance).openPopup();
         
         
-    }
+    }}
 }
 
 
